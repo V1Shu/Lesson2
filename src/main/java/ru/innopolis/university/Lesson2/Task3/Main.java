@@ -1,11 +1,9 @@
 package ru.innopolis.university.Lesson2.Task3;
 
-import java.util.Arrays;
-
 public class Main {
 
     public static void main(String[] args) {
-        Person[] personArray = new Person[100];
+        Person[] personArray = new Person[10];
         Person.FillArray(personArray);
 
         for (Person person : personArray) {
@@ -14,8 +12,8 @@ public class Main {
 
         System.out.println("----------------------------------------------");
 
-        InsertionSort bubbleSort = new InsertionSort();
-        bubbleSort.Alphabet(personArray);
+        BubbleSort bubbleSort = new BubbleSort();
+        bubbleSort.ManFirst(personArray);
 
         for (Person person : personArray) {
             System.out.println(person.name + "_____" + person.age + "____" + person.sex);

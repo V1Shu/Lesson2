@@ -1,6 +1,5 @@
 package ru.innopolis.university.Lesson2.Task3;
 
-import java.util.Comparator;
 import java.util.Random;
 
 public class Person implements Comparable {

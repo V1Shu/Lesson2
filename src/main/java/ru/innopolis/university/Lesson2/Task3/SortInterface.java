@@ -4,5 +4,5 @@ public interface SortInterface {
 
     void ManFirst(Person[] PersonArray);
     void OlderFirst(Person[] PersonArray);
-    void Alphabet (Person[] PersonArray);
+    void Alphabet(Person[] PersonArray);
 }
