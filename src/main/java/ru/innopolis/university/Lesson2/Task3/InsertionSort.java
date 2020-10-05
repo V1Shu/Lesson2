@@ -1,5 +1,8 @@
 package ru.innopolis.university.Lesson2.Task3;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 public class InsertionSort implements SortInterface{
     @Override
     public void ManFirst(Person[] PersonArray) {
@@ -19,7 +22,7 @@ public class InsertionSort implements SortInterface{
         for (int i = 1; i < PersonArray.length; i++) {
             Person current = PersonArray[i];
             int j = i - 1;
-            while(j >= 0 && current.age < PersonArray[j].age) {
+            while(j >= 0 && current.age > PersonArray[j].age) {
                 PersonArray[j+1] = PersonArray[j];
                 j--;
             }
@@ -29,7 +32,7 @@ public class InsertionSort implements SortInterface{
 
     @Override
     public void Alphabet(Person[] PersonArray) {
-        for (int i = 1; i < PersonArray.length; i++) {
+        /*for (int i = 1; i < PersonArray.length; i++) {
             Person current = PersonArray[i];
             int j = i - 1;
             for (int nameLength = 0; nameLength < PersonArray[i].name.length(); nameLength++) {
@@ -40,6 +43,7 @@ public class InsertionSort implements SortInterface{
                 PersonArray[j + 1] = current;
                 break;
             }
-        }
+        }*/
+        Arrays.sort(PersonArray);
     }
 }
