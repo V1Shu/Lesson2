@@ -50,16 +50,9 @@ public class Person implements Comparable {
         Person firstPerson = this;
         Person secondPerson = (Person) o;
 
-        char[] firstPersonName = firstPerson.name.toCharArray();
-        char[] secondPersonName = secondPerson.name.toCharArray();
+        String firstPersonName = firstPerson.name;
+        String secondPersonName = secondPerson.name;
 
-        int minLength = Math.min(firstPersonName.length, secondPersonName.length);
-
-        for (int counter = 0; counter < minLength; counter++) {
-            if (firstPersonName[counter] < secondPersonName[counter]) {
-                return 1;
-            }
-        }
-        return -1;
+        return firstPersonName.compareToIgnoreCase(secondPersonName);
     }
 }
