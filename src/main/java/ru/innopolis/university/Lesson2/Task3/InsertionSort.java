@@ -32,18 +32,15 @@ public class InsertionSort implements SortInterface{
 
     @Override
     public void Alphabet(Person[] PersonArray) {
-        /*for (int i = 1; i < PersonArray.length; i++) {
+        for (int i = 0; i < PersonArray.length - 1; i++) {
             Person current = PersonArray[i];
+            Person next = PersonArray[i + 1];
             int j = i - 1;
-            for (int nameLength = 0; nameLength < PersonArray[i].name.length(); nameLength++) {
-                while (j >= 0 && current.name.toCharArray()[nameLength] < PersonArray[j].name.toCharArray()[nameLength]) {
-                    PersonArray[j + 1] = PersonArray[j];
-                    j--;
-                }
-                PersonArray[j + 1] = current;
-                break;
+            while (j >= 0 && current.compareTo(next) > 0) {
+                PersonArray[j+1] = PersonArray[j];
+                j--;
             }
-        }*/
-        Arrays.sort(PersonArray);
+            PersonArray[j+1] = current;
+        }
     }
 }

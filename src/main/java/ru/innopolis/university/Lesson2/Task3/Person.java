@@ -1,8 +1,9 @@
 package ru.innopolis.university.Lesson2.Task3;
 
+import java.util.Comparator;
 import java.util.Random;
 
-public class Person {
+public class Person implements Comparable {
 
     int age;
     String name;
@@ -42,5 +43,23 @@ public class Person {
     private static int RandomAge() {
         Random random = new Random();
         return random.nextInt(100);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Person firstPerson = this;
+        Person secondPerson = (Person) o;
+
+        char[] firstPersonName = firstPerson.name.toCharArray();
+        char[] secondPersonName = secondPerson.name.toCharArray();
+
+        int minLength = Math.min(firstPersonName.length, secondPersonName.length);
+
+        for (int counter = 0; counter < minLength; counter++) {
+            if (firstPersonName[counter] < secondPersonName[counter]) {
+                return 1;
+            }
+        }
+        return -1;
     }
 }
