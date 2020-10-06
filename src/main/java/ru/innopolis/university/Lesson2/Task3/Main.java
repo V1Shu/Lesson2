@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Person[] personArray = new Person[10];
+        Person[] personArray = new Person[10000];
         Person.FillArray(personArray);
 
         PrintResult(personArray);
