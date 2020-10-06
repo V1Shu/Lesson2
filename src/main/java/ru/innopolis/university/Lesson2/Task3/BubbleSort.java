@@ -6,16 +6,18 @@ public class BubbleSort implements SortInterface {
     public void ManFirst(Person[] PersonArray) {
         boolean sorted = false;
         Person tempLink;
-        while(!sorted) {
+        int counter = 0;
+        while(!sorted && counter < PersonArray.length) {
             sorted = true;
             for (int i = 0; i < PersonArray.length - 1; i++) {
-                if (PersonArray[i].sex == Sex.MAN) {
+                if (PersonArray[i].getSex() == Sex.WOMAN) {
                     tempLink = PersonArray[i];
                     PersonArray[i] = PersonArray[i+1];
                     PersonArray[i+1] = tempLink;
                     sorted = false;
                 }
             }
+            counter++;
         }
     }
 
@@ -26,7 +28,7 @@ public class BubbleSort implements SortInterface {
         while(!sorted) {
             sorted = true;
             for (int i = 0; i < PersonArray.length - 1; i++) {
-                if (PersonArray[i].age < PersonArray[i+1].age) {
+                if (PersonArray[i].getAge() < PersonArray[i + 1].getAge()) {
                     tempLink = PersonArray[i];
                     PersonArray[i] = PersonArray[i+1];
                     PersonArray[i+1] = tempLink;
@@ -43,14 +45,11 @@ public class BubbleSort implements SortInterface {
         while(!sorted) {
             sorted = true;
             for (int i = 0; i < PersonArray.length - 1; i++) {
-                for (int nameLength = 0; nameLength < PersonArray[i].name.length(); nameLength++) {
-                    if (PersonArray[i].name.toCharArray()[nameLength] > PersonArray[i+1].name.toCharArray()[nameLength]) {
-                        tempLink = PersonArray[i];
-                        PersonArray[i] = PersonArray[i+1];
-                        PersonArray[i+1] = tempLink;
-                        sorted = false;
-                        break;
-                    }
+                if (PersonArray[i].compareTo(PersonArray[i + 1]) > 0) {
+                    tempLink = PersonArray[i];
+                    PersonArray[i] = PersonArray[i+1];
+                    PersonArray[i+1] = tempLink;
+                    sorted = false;
                 }
             }
         }

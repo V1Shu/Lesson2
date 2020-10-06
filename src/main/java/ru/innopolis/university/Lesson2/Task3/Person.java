@@ -4,9 +4,21 @@ import java.util.Random;
 
 public class Person implements Comparable {
 
-    int age;
-    String name;
-    Sex sex;
+    private int age;
+    private String name;
+    private Sex sex;
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
 
     public Person (int age, String name, Sex sex) {
         this.age = age;
@@ -53,5 +65,14 @@ public class Person implements Comparable {
         String secondPersonName = secondPerson.name;
 
         return firstPersonName.compareToIgnoreCase(secondPersonName);
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name= " + name +
+                " , age= '" + age + '\'' +
+                " , sex= " + sex +
+                '}';
     }
 }

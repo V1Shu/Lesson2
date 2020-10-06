@@ -6,7 +6,7 @@ public class InsertionSort implements SortInterface{
         for (int i = 1; i < PersonArray.length; i++) {
             Person current = PersonArray[i];
             int j = i - 1;
-            while(j >= 0 && current.sex == Sex.MAN) {
+            while(j >= 0 && current.getSex() == Sex.MAN) {
                 PersonArray[j+1] = PersonArray[j];
                 j--;
             }
@@ -19,7 +19,7 @@ public class InsertionSort implements SortInterface{
         for (int i = 1; i < PersonArray.length; i++) {
             Person current = PersonArray[i];
             int j = i - 1;
-            while(j >= 0 && current.age > PersonArray[j].age) {
+            while(j >= 0 && current.getAge() > PersonArray[j].getAge()) {
                 PersonArray[j+1] = PersonArray[j];
                 j--;
             }
