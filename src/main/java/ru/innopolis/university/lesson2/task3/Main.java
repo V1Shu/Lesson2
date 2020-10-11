@@ -2,7 +2,7 @@ package ru.innopolis.university.lesson2.task3;
 
 import ru.innopolis.university.lesson2.task3.model.Person;
 import ru.innopolis.university.lesson2.task3.model.SortType;
-import ru.innopolis.university.lesson2.task3.service.serviceMethods;
+import ru.innopolis.university.lesson2.task3.service.ServiceMethods;
 import ru.innopolis.university.lesson2.task3.sort.BubbleSort;
 import ru.innopolis.university.lesson2.task3.sort.InsertionSort;
 import ru.innopolis.university.lesson2.task3.sort.SortInterface;
@@ -16,11 +16,11 @@ public class Main {
 
     /**
      * Generate Array of Person objects, ask user how to sort it and print result of sort
-     * @param args Input param
+     * @param args
      */
     public static void main(String[] args) {
         Person[] personArray = new Person[10000];
-        serviceMethods.fillArrayOfPerson(personArray);
+        ServiceMethods.fillArrayOfPerson(personArray);
 
         printResult(personArray);
         printInstructions();

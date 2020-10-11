@@ -5,7 +5,7 @@ import ru.innopolis.university.lesson2.task3.model.Person;
 /**
  * Contain common service methods
  */
-public class serviceMethods {
+public class ServiceMethods {
 
     /**
      * Fill Array of Person objects by Person with randomize age, name and sex
