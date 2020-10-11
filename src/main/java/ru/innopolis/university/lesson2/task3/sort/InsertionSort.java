@@ -1,8 +1,14 @@
-package ru.innopolis.university.Lesson2.Task3;
+package ru.innopolis.university.lesson2.task3.sort;
 
-public class InsertionSort implements SortInterface{
+import ru.innopolis.university.lesson2.task3.model.Person;
+import ru.innopolis.university.lesson2.task3.model.Sex;
+
+/**
+ * Override directions of sort. All directions sort by bubble
+ */
+public class InsertionSort implements SortInterface {
     @Override
-    public void ManFirst(Person[] PersonArray) {
+    public void manFirst(Person[] PersonArray) {
         for (int i = 1; i < PersonArray.length; i++) {
             Person current = PersonArray[i];
             int j = i - 1;
@@ -15,7 +21,7 @@ public class InsertionSort implements SortInterface{
     }
 
     @Override
-    public void OlderFirst(Person[] PersonArray) {
+    public void olderFirst(Person[] PersonArray) {
         for (int i = 1; i < PersonArray.length; i++) {
             Person current = PersonArray[i];
             int j = i - 1;
@@ -28,7 +34,7 @@ public class InsertionSort implements SortInterface{
     }
 
     @Override
-    public void Alphabet(Person[] PersonArray) {
+    public void alphabet(Person[] PersonArray) {
         for (int i = 1; i < PersonArray.length; i++) {
             Person current = PersonArray[i];
             int j = i - 1;

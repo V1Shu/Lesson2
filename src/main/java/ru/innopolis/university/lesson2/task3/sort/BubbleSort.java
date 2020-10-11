@@ -1,9 +1,15 @@
-package ru.innopolis.university.Lesson2.Task3;
+package ru.innopolis.university.lesson2.task3.sort;
 
+import ru.innopolis.university.lesson2.task3.model.Person;
+import ru.innopolis.university.lesson2.task3.model.Sex;
+
+/**
+ * Override directions of sort. All directions sort by bubble
+ */
 public class BubbleSort implements SortInterface {
 
     @Override
-    public void ManFirst(Person[] PersonArray) {
+    public void manFirst(Person[] PersonArray) {
         boolean sorted = false;
         Person tempLink;
         int counter = 0;
@@ -22,7 +28,7 @@ public class BubbleSort implements SortInterface {
     }
 
     @Override
-    public void OlderFirst(Person[] PersonArray) {
+    public void olderFirst(Person[] PersonArray) {
         boolean sorted = false;
         Person tempLink;
         while(!sorted) {
@@ -39,7 +45,7 @@ public class BubbleSort implements SortInterface {
     }
 
     @Override
-    public void Alphabet(Person[] PersonArray) {
+    public void alphabet(Person[] PersonArray) {
         boolean sorted = false;
         Person tempLink;
         while(!sorted) {
