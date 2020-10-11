@@ -16,7 +16,7 @@ public class Main {
 
     /**
      * Generate Array of Person objects, ask user how to sort it and print result of sort
-     * @param args
+     * @param args Input param
      */
     public static void main(String[] args) {
         Person[] personArray = new Person[10000];
