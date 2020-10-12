@@ -16,10 +16,7 @@ public class MathBox {
      */
     public MathBox(Number[] numberArray) {
         list = Arrays.asList(numberArray.clone());
-        for (int counter = list.size() - 1; counter > 0; counter--)
-            if (list.get(counter) == list.get(counter - 1)) {
-                list.remove(counter);
-            }
+
     }
 
     /**
@@ -36,23 +33,21 @@ public class MathBox {
     /**
      * @return
      */
-    public Number splitter() {
-        double sum = 0.0;
-        for (Number number : list) {
-            sum += number.doubleValue();
+    public void splitter(Number div) {
+        if (div.intValue() == 0) {
+            System.out.println("div can't be 0");
+            throw new ArithmeticException();
         }
-        return sum;
-    }
-
-    public void printList() {
-
+        for (int counter = 0; counter < list.size(); counter++) {
+            list.set(counter, list.get(counter).doubleValue() / div.doubleValue());
+        }
     }
 
     @Override
     public String toString() {
         String output = "";
         for (Number number : list) {
-            output += " " + number.toString();
+            output += number.toString() + " ";
         }
         return output;
     }
