@@ -8,15 +8,19 @@ import java.util.*;
  */
 public class MathBox {
 
-    private List<Number> list;
+    private ArrayList<Number> list = new ArrayList<>();
 
     /**
      * Constructor with unique checking
      * @param numberArray Array of Numbers
      */
     public MathBox(Number[] numberArray) {
-        list = Arrays.asList(numberArray.clone());
-
+        Collections.addAll(list, numberArray);
+        for(int counter = list.size() - 1; counter > 0; counter--){
+            if (list.indexOf(list.get(counter)) != list.lastIndexOf(list.get(counter))) {
+                list.remove(counter);
+            }
+        }
     }
 
     /**
@@ -31,7 +35,7 @@ public class MathBox {
     }
 
     /**
-     * @return
+     * Division every element by input number
      */
     public void splitter(Number div) {
         if (div.intValue() == 0) {
@@ -43,12 +47,35 @@ public class MathBox {
         }
     }
 
+    /**
+     * Remove element from ArrayList, if it's find
+     * @param deletedNumber Type Integer
+     */
+    public void removeElement(Integer deletedNumber) {
+        if (list.contains(deletedNumber)) {
+            list.remove(deletedNumber);
+        }
+    }
+
     @Override
     public String toString() {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for (Number number : list) {
-            output += number.toString() + " ";
+            output.append(number.toString()).append("  ");
         }
-        return output;
+        return output.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MathBox mathBox = (MathBox) o;
+        return Objects.equals(list, mathBox.list);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(list);
     }
 }
