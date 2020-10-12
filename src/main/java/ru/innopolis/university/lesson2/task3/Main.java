@@ -8,6 +8,7 @@ import ru.innopolis.university.lesson2.task3.sort.InsertionSort;
 import ru.innopolis.university.lesson2.task3.sort.SortInterface;
 
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Shulepov Vadim
@@ -19,7 +20,7 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
-        Person[] personArray = new Person[10000];
+        Person[] personArray = new Person[10_000];
         ServiceMethods.fillArrayOfPerson(personArray);
 
         printResult(personArray);
@@ -69,7 +70,8 @@ public class Main {
         }
         long estimatedTime = System.nanoTime() - startTime;
         printResult(array);
-        System.out.println("Estimated time: " + estimatedTime);
+        System.out.println("Estimated time: " + TimeUnit.MILLISECONDS.convert(estimatedTime, TimeUnit.NANOSECONDS)
+                + " MilliSeconds");
     }
 
     /**

@@ -24,7 +24,8 @@ public class ErrorExamples {
     /**
      * Call ArithmeticException by throwing it
      */
-    public static void throwException() {
-        throw new ArithmeticException();
+    public static void throwException() throws MyException {
+        throw new MyException("My new Exception");
     }
 }
+

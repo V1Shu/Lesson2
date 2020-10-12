@@ -1,6 +1,7 @@
 package ru.innopolis.university.lesson2.task1.helloworld;
 
 import ru.innopolis.university.lesson2.task1.errors.ErrorExamples;
+import ru.innopolis.university.lesson2.task1.errors.MyException;
 
 import java.util.Random;
 
@@ -9,9 +10,9 @@ import java.util.Random;
  * @author Shulepov Vadim
  */
 public class HelloWorld {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MyException {
         Random random = new Random();
-        switch (random.nextInt(6)) {
+        switch (random.nextInt(4)) {
             case 1:
                 ErrorExamples.arrayOutOfBounds();
                 break;
