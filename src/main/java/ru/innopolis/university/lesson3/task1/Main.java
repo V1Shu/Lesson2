@@ -7,18 +7,8 @@ package ru.innopolis.university.lesson3.task1;
 public class Main {
 
     public static void main(String[] args) {
-        /**
-         * Test array
-         */
         Number[] numbers = new Number[8];
-        numbers[0] = (byte) 5;
-        numbers[1] = 2;
-        numbers[2] = 5.7;
-        numbers[3] = 4.2f;
-        numbers[4] = (byte) 2;
-        numbers[5] = 5;
-        numbers[6] = 4.2f;
-        numbers[7] = 2.3;
+        testInput(numbers);
 
         MathBox mathB = new MathBox(numbers);
 
@@ -29,5 +19,20 @@ public class Main {
         mathB.splitter(3.0);
         System.out.println("ArrayList after splitter method: " + mathB.toString());
 
+    }
+
+    /**
+     * Fill array by test numbers
+     * @param numbers array of numbers
+     */
+    private static void testInput(Number[] numbers) {
+        numbers[0] = (byte) 5;
+        numbers[1] = 2;
+        numbers[2] = 5.7;
+        numbers[3] = 4.2f;
+        numbers[4] = (byte) 2;
+        numbers[5] = 5;
+        numbers[6] = 4.2f;
+        numbers[7] = 2.3;
     }
 }

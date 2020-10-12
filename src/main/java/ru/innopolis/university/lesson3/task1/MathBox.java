@@ -8,13 +8,14 @@ import java.util.*;
  */
 public class MathBox {
 
-    private ArrayList<Number> list = new ArrayList<>();
+    private ArrayList<Number> list;
 
     /**
      * Constructor with unique checking
      * @param numberArray Array of Numbers
      */
     public MathBox(Number[] numberArray) {
+        list = new ArrayList<>();
         Collections.addAll(list, numberArray);
         for(int counter = list.size() - 1; counter > 0; counter--){
             if (list.indexOf(list.get(counter)) != list.lastIndexOf(list.get(counter))) {
