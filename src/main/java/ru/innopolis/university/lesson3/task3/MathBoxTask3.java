@@ -8,7 +8,7 @@ import java.util.Objects;
  * Class allows user to work with array of numbers
  * @author v.shulepov
  */
-public class MathBox extends ObjectBox {
+public class MathBoxTask3 extends ObjectBoxTask3 {
 
     private ArrayList<Number> list;
 
@@ -16,7 +16,7 @@ public class MathBox extends ObjectBox {
      * Constructor with unique checking
      * @param numberArray Array of Numbers
      */
-    public MathBox(Number[] numberArray) {
+    public MathBoxTask3(Number[] numberArray) {
         list = new ArrayList<>();
         Collections.addAll(list, numberArray);
         for(int counter = list.size() - 1; counter > 0; counter--){
@@ -50,35 +50,40 @@ public class MathBox extends ObjectBox {
         }
     }
 
-    /**
-     * Remove element from ArrayList, if it's find
-     * @param deletedNumber Type Integer
-     */
-    public void removeElement(Integer deletedNumber) {
-        if (list.contains(deletedNumber)) {
-            list.remove(deletedNumber);
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MathBoxTask3 mathBoxTask3 = (MathBoxTask3) o;
+        return Objects.equals(list, mathBoxTask3.list);
     }
 
     @Override
-    public String toString() {
+    public int hashCode() {
+        return Objects.hash(list);
+    }
+
+    @Override
+    public boolean addObject(Object obj) throws NotNumberException {
+        if (obj instanceof Number) {
+            list.add((Number) obj);
+            return true;
+        }
+        throw new NotNumberException("Getting object must be Number");
+    }
+
+    @Override
+    public String dump() {
         StringBuilder output = new StringBuilder();
         for (Number number : list) {
             output.append(number.toString()).append("  ");
         }
         return output.toString();
     }
+}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MathBox mathBox = (MathBox) o;
-        return Objects.equals(list, mathBox.list);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(list);
+class NotNumberException extends Exception {
+    public NotNumberException(String message) {
+        super(message);
     }
 }

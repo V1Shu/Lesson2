@@ -6,14 +6,14 @@ import java.util.ArrayList;
  * Class contains List of Objects
  * @author v.shulepov
  */
-public class ObjectBox {
+public class ObjectBoxTask3 {
 
-    private ArrayList<Object> objectList;
+    protected ArrayList<Object> objectList;
 
     /**
      * Constructor
      */
-    public ObjectBox() {
+    public ObjectBoxTask3() {
         objectList = new ArrayList<>();
     }
 
@@ -22,7 +22,7 @@ public class ObjectBox {
      * @param obj Input object
      * @return true - added, false - not added
      */
-    public boolean addObject(Object obj) {
+    public boolean addObject(Object obj) throws NotNumberException {
         return objectList.add(obj);
     }
 
