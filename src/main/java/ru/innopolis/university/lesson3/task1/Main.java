@@ -18,14 +18,13 @@ public class Main {
         System.out.println("Sum of all elements: " + mathB.summator());
         mathB.splitter(3.0);
         System.out.println("ArrayList after splitter method: " + mathB.toString());
-
     }
 
     /**
      * Fill array by test numbers
      * @param numbers array of numbers
      */
-    private static void testInput(Number[] numbers) {
+    public static void testInput(Number[] numbers) {
         numbers[0] = (byte) 5;
         numbers[1] = 2;
         numbers[2] = 5.7;
