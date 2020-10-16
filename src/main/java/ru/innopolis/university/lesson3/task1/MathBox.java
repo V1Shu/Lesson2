@@ -1,14 +1,15 @@
 package ru.innopolis.university.lesson3.task1;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Class allows user to work with array of numbers
  * @author v.shulepov
  */
 public class MathBox {
-
-    private ArrayList<Number> list;
+    private static final Logger logger = Logger.getLogger(String.valueOf(MathBox.class));
+    private final ArrayList<Number> list;
 
     /**
      * Constructor with unique checking
@@ -40,7 +41,7 @@ public class MathBox {
      */
     public void splitter(Number div) {
         if (div.intValue() == 0) {
-            System.out.println("div can't be 0");
+            logger.info("div can't be 0");
             throw new ArithmeticException();
         }
         for (int counter = 0; counter < list.size(); counter++) {
@@ -53,9 +54,7 @@ public class MathBox {
      * @param deletedNumber Type Integer
      */
     public void removeElement(Integer deletedNumber) {
-        if (list.contains(deletedNumber)) {
-            list.remove(deletedNumber);
-        }
+        list.remove(deletedNumber);
     }
 
     @Override

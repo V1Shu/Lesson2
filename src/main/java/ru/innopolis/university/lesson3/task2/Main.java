@@ -1,17 +1,25 @@
 package ru.innopolis.university.lesson3.task2;
 
+import ru.innopolis.university.lesson3.task1.MathBox;
+
+import java.util.logging.Logger;
+
 /**
  * Test class ObjectBox
  * @author v.shulepov
  */
 public class Main {
+    private static final Logger logger = Logger.getLogger(String.valueOf(MathBox.class));
+
     public static void main(String[] args) {
         ObjectBox objBox = new ObjectBox();
         testInput(objBox);
 
-        System.out.println("Input List: " + objBox.dump());
+        String info = "Input List: " + objBox.dump();
+        logger.info(info);
         objBox.deleteObject("string");
-        System.out.println("List after delete \"string\": " + objBox.dump());
+        info = "List after delete \"string\": " + objBox.dump();
+        logger.info(info);
     }
 
     /**

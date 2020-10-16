@@ -3,20 +3,21 @@ package ru.innopolis.university.lesson3.task3;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 /**
  * Class allows user to work with array of numbers
  * @author v.shulepov
  */
-public class MathBoxTask3 extends ObjectBoxTask3 {
-
-    private ArrayList<Number> list;
+public class MathBox extends ObjectBox {
+    private static final Logger logger = Logger.getLogger(String.valueOf(ru.innopolis.university.lesson3.task3.MathBox.class));
+    private final ArrayList<Number> list;
 
     /**
      * Constructor with unique checking
      * @param numberArray Array of Numbers
      */
-    public MathBoxTask3(Number[] numberArray) {
+    public MathBox(Number[] numberArray) {
         list = new ArrayList<>();
         Collections.addAll(list, numberArray);
         for(int counter = list.size() - 1; counter > 0; counter--){
@@ -42,7 +43,7 @@ public class MathBoxTask3 extends ObjectBoxTask3 {
      */
     public void splitter(Number div) {
         if (div.intValue() == 0) {
-            System.out.println("div can't be 0");
+            logger.info("div can't be 0");
             throw new ArithmeticException();
         }
         for (int counter = 0; counter < list.size(); counter++) {
@@ -54,7 +55,7 @@ public class MathBoxTask3 extends ObjectBoxTask3 {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MathBoxTask3 mathBoxTask3 = (MathBoxTask3) o;
+        MathBox mathBoxTask3 = (MathBox) o;
         return Objects.equals(list, mathBoxTask3.list);
     }
 

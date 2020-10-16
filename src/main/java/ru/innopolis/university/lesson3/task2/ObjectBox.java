@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class ObjectBox {
 
-    private ArrayList<Object> objectList;
+    private final ArrayList<Object> objectList;
 
     /**
      * Constructor
