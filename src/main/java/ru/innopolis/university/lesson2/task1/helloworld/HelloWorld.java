@@ -4,12 +4,15 @@ import ru.innopolis.university.lesson2.task1.errors.ErrorExamples;
 import ru.innopolis.university.lesson2.task1.errors.MyException;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  * Randomly print "Hello World" or call one of Exceptions: ArrayOutOfBounds, NullPointer, Arithmetical
  * @author Shulepov Vadim
  */
 public class HelloWorld {
+    private static final Logger logger = Logger.getLogger(String.valueOf(HelloWorld.class));
+
     public static void main(String[] args) throws MyException {
         Random random = new Random();
         switch (random.nextInt(4)) {
@@ -23,7 +26,7 @@ public class HelloWorld {
                 ErrorExamples.throwException();
                 break;
             default:
-                System.out.println("Hello World");
+                logger.info("Hello World");
                 break;
         }
     }
