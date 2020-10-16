@@ -5,6 +5,10 @@ package ru.innopolis.university.lesson2.task1.errors;
  * @author Shulepov Vadim
  */
 public class ErrorExamples {
+
+    private ErrorExamples() {
+    }
+
     /**
      * call ArrayOutOfBounds Exception
      */

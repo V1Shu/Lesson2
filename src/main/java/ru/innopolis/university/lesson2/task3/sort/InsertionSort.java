@@ -8,41 +8,41 @@ import ru.innopolis.university.lesson2.task3.model.Sex;
  */
 public class InsertionSort implements SortInterface {
     @Override
-    public void manFirst(Person[] PersonArray) {
-        for (int i = 1; i < PersonArray.length; i++) {
-            Person current = PersonArray[i];
+    public void manFirst(Person[] personArray) {
+        for (int i = 1; i < personArray.length; i++) {
+            Person current = personArray[i];
             int j = i - 1;
             while(j >= 0 && current.getSex() == Sex.MAN) {
-                PersonArray[j+1] = PersonArray[j];
+                personArray[j+1] = personArray[j];
                 j--;
             }
-            PersonArray[j+1] = current;
+            personArray[j+1] = current;
         }
     }
 
     @Override
-    public void olderFirst(Person[] PersonArray) {
-        for (int i = 1; i < PersonArray.length; i++) {
-            Person current = PersonArray[i];
+    public void olderFirst(Person[] personArray) {
+        for (int i = 1; i < personArray.length; i++) {
+            Person current = personArray[i];
             int j = i - 1;
-            while(j >= 0 && current.getAge() > PersonArray[j].getAge()) {
-                PersonArray[j+1] = PersonArray[j];
+            while(j >= 0 && current.getAge() > personArray[j].getAge()) {
+                personArray[j+1] = personArray[j];
                 j--;
             }
-            PersonArray[j+1] = current;
+            personArray[j+1] = current;
         }
     }
 
     @Override
-    public void alphabet(Person[] PersonArray) {
-        for (int i = 1; i < PersonArray.length; i++) {
-            Person current = PersonArray[i];
+    public void alphabet(Person[] personArray) {
+        for (int i = 1; i < personArray.length; i++) {
+            Person current = personArray[i];
             int j = i - 1;
-            while (j >= 0 && current.compareTo(PersonArray[j]) < 0) {
-                PersonArray[j+1] = PersonArray[j];
+            while (j >= 0 && current.compareTo(personArray[j]) < 0) {
+                personArray[j+1] = personArray[j];
                 j--;
             }
-            PersonArray[j+1] = current;
+            personArray[j+1] = current;
         }
     }
 }
