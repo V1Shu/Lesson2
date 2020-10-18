@@ -5,25 +5,44 @@ import ru.innopolis.university.lesson2.task3.model.Person;
 import java.util.Objects;
 import java.util.Random;
 
-public class Animal implements Comparable<Animal> {
-
-    private int ID;
+/**
+ * Class contains information about animal
+ * @author v.shulepov
+ */
+public class Animal {
+    /**
+     * identifier
+     */
+    private final int ID;
     private String name = "Unnamed";
     private Person owner;
-    private int weight = 1;
+    private int weight;
 
-    private Random random = new Random();
-
+    /**
+     * Constructor without arg
+     */
     public Animal() {
+
+        Random random = new Random();
         this.ID = random.nextInt(99);
         this.owner = new Person();
+        this.weight = random.nextInt(30);
     }
 
+    /**
+     * Constructor taking name
+     * @param name String type
+     */
     public Animal(String name) {
         this();
         this.name = name;
     }
 
+    /**
+     * Constructor taking name and weight
+     * @param name String type
+     * @param weight int type
+     */
     public Animal(String name, int weight) {
         this(name);
         this.weight = weight;
@@ -53,6 +72,11 @@ public class Animal implements Comparable<Animal> {
                 '}';
     }
 
+    /**
+     * Compare Animals by ID
+     * @param o Animal object
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,28 +88,5 @@ public class Animal implements Comparable<Animal> {
     @Override
     public int hashCode() {
         return Objects.hash(ID);
-    }
-
-    @Override
-    public int compareTo(Animal animal) {
-        if (this.getOwner().compareTo(animal.getOwner()) == 0) {
-            if (this.getName().compareToIgnoreCase(animal.getName()) == 0) {
-                if (this.getWeight() == animal.getWeight()) {
-                    return 0;
-                } else if (this.getWeight() > animal.getWeight()) {
-                    return 1;
-                } else {
-                    return -1;
-                }
-            } else if (this.getName().compareToIgnoreCase(animal.getName()) > 0) {
-                return 1;
-            } else {
-                return -1;
-            }
-        } else if (this.getOwner().compareTo(animal.getOwner()) > 0) {
-            return 1;
-        } else {
-            return -1;
-        }
     }
 }
