@@ -1,10 +1,13 @@
 package ru.innopolis.university.lesson3.task1;
 
+import java.util.logging.Logger;
+
 /**
  * Class for test MathBox
  * @author v.shulepov
  */
 public class Main {
+    private static final Logger logger = Logger.getLogger(String.valueOf(MathBox.class));
 
     public static void main(String[] args) {
         Number[] numbers = new Number[8];
@@ -12,12 +15,16 @@ public class Main {
 
         MathBox mathB = new MathBox(numbers);
 
-        System.out.println("Input ArrayList: " + mathB.toString());
+        String info = "Input ArrayList: " + mathB.toString();
+        logger.info(info);
         mathB.removeElement(5);
-        System.out.println("Array after remove element: " + mathB.toString());
-        System.out.println("Sum of all elements: " + mathB.summator());
+        info = "Array after remove element: " + mathB.toString();
+        logger.info(info);
+        info = "Sum of all elements: " + mathB.summator();
+        logger.info(info);
         mathB.splitter(3.0);
-        System.out.println("ArrayList after splitter method: " + mathB.toString());
+        info = "ArrayList after splitter method: " + mathB.toString();
+        logger.info(info);
     }
 
     /**

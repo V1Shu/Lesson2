@@ -9,17 +9,17 @@ import ru.innopolis.university.lesson2.task3.model.Sex;
 public class BubbleSort implements SortInterface {
 
     @Override
-    public void manFirst(Person[] PersonArray) {
+    public void manFirst(Person[] personArray) {
         boolean sorted = false;
         Person tempLink;
         int counter = 0;
-        while(!sorted && counter < PersonArray.length) {
+        while(!sorted && counter < personArray.length) {
             sorted = true;
-            for (int i = 0; i < PersonArray.length - 1; i++) {
-                if (PersonArray[i].getSex() == Sex.WOMAN) {
-                    tempLink = PersonArray[i];
-                    PersonArray[i] = PersonArray[i+1];
-                    PersonArray[i+1] = tempLink;
+            for (int i = 0; i < personArray.length - 1; i++) {
+                if (personArray[i].getSex() == Sex.WOMAN) {
+                    tempLink = personArray[i];
+                    personArray[i] = personArray[i+1];
+                    personArray[i+1] = tempLink;
                     sorted = false;
                 }
             }
@@ -28,16 +28,16 @@ public class BubbleSort implements SortInterface {
     }
 
     @Override
-    public void olderFirst(Person[] PersonArray) {
+    public void olderFirst(Person[] personArray) {
         boolean sorted = false;
         Person tempLink;
         while(!sorted) {
             sorted = true;
-            for (int i = 0; i < PersonArray.length - 1; i++) {
-                if (PersonArray[i].getAge() < PersonArray[i + 1].getAge()) {
-                    tempLink = PersonArray[i];
-                    PersonArray[i] = PersonArray[i+1];
-                    PersonArray[i+1] = tempLink;
+            for (int i = 0; i < personArray.length - 1; i++) {
+                if (personArray[i].getAge() < personArray[i + 1].getAge()) {
+                    tempLink = personArray[i];
+                    personArray[i] = personArray[i+1];
+                    personArray[i+1] = tempLink;
                     sorted = false;
                 }
             }
@@ -45,16 +45,16 @@ public class BubbleSort implements SortInterface {
     }
 
     @Override
-    public void alphabet(Person[] PersonArray) {
+    public void alphabet(Person[] personArray) {
         boolean sorted = false;
         Person tempLink;
         while(!sorted) {
             sorted = true;
-            for (int i = 0; i < PersonArray.length - 1; i++) {
-                if (PersonArray[i].compareTo(PersonArray[i + 1]) > 0) {
-                    tempLink = PersonArray[i];
-                    PersonArray[i] = PersonArray[i+1];
-                    PersonArray[i+1] = tempLink;
+            for (int i = 0; i < personArray.length - 1; i++) {
+                if (personArray[i].compareTo(personArray[i + 1]) > 0) {
+                    tempLink = personArray[i];
+                    personArray[i] = personArray[i+1];
+                    personArray[i+1] = tempLink;
                     sorted = false;
                 }
             }

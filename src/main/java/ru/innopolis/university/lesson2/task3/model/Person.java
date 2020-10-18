@@ -1,46 +1,41 @@
 package ru.innopolis.university.lesson2.task3.model;
 
+import java.util.Objects;
 import java.util.Random;
 
 /**
  * Person
  */
-public class Person implements Comparable {
+public class Person implements Comparable<Person> {
 
     /**
      * age of Person
      */
-    private int age;
+    private final int age;
 
     /**
      * name of Person
      */
-    private String name;
+    private final String name;
 
     /**
      * sex of Person
      */
-    private Sex sex;
+    private final Sex sex;
+
+    static Random random = new Random();
 
     /**
      * age getter
-     * @return
+     * @return int
      */
     public int getAge() {
         return age;
     }
 
     /**
-     * name getter
-     * @return
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
      * sex getter
-     * @return
+     * @return enum Sex
      */
     public Sex getSex() {
         return sex;
@@ -57,59 +52,39 @@ public class Person implements Comparable {
 
     /**
      * generate random sex {@link Sex}
-     * @return
+     * @return enum Sex
      */
     private static Sex randomSex() {
-        Random random = new Random();
         return random.nextBoolean() ? Sex.MAN : Sex.WOMAN;
     }
 
     /**
      * generate random name, length = 6
-     * @return
+     * @return random string length of 6 char
      */
     private static String randomName() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 6;
-        Random random = new Random();
 
-        String generatedString = random.ints(leftLimit, rightLimit + 1)
+        return random.ints(leftLimit, rightLimit + 1)
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
-
-        return generatedString;
     }
 
     /**
      * generate random age (integer between 0 and 100)
-     * @return
+     * @return random int from 0 to 100
      */
     private static int randomAge() {
-        Random random = new Random();
+
         return random.nextInt(100);
     }
 
     /**
-     * override compareTo, comparing Persons by name
-     * @param o
-     * @return
-     */
-    @Override
-    public int compareTo(Object o) {
-        Person firstPerson = this;
-        Person secondPerson = (Person) o;
-
-        String firstPersonName = firstPerson.name;
-        String secondPersonName = secondPerson.name;
-
-        return firstPersonName.compareToIgnoreCase(secondPersonName);
-    }
-
-    /**
      * override toString
-     * @return
+     * @return string with name, age and sex
      */
     @Override
     public String toString() {
@@ -118,5 +93,30 @@ public class Person implements Comparable {
                 " , age= '" + age + '\'' +
                 " , sex= " + sex +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return age == person.age &&
+                Objects.equals(name, person.name) &&
+                sex == person.sex;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(age, name, sex);
+    }
+
+    /**
+     * override compareTo, comparing Persons by name
+     * @param o Person object compare with
+     * @return result of compare
+     */
+    @Override
+    public int compareTo(Person o) {
+        return this.name.compareToIgnoreCase(o.name);
     }
 }

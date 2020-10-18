@@ -9,19 +9,19 @@ public interface SortInterface {
 
     /**
      * Person with sex "Man" will be first
-     * @param PersonArray
+     * @param personArray input Array of Person objects
      */
-    void manFirst(Person[] PersonArray);
+    void manFirst(Person[] personArray);
 
     /**
      * Oldest Person first (by age)
-     * @param PersonArray
+     * @param personArray input Array of Person objects
      */
-    void olderFirst(Person[] PersonArray);
+    void olderFirst(Person[] personArray);
 
     /**
      * Alphabet (by name)
-     * @param PersonArray
+     * @param personArray input Array of Person objects
      */
-    void alphabet(Person[] PersonArray);
+    void alphabet(Person[] personArray);
 }

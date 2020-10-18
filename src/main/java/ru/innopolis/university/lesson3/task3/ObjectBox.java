@@ -6,14 +6,14 @@ import java.util.ArrayList;
  * Class contains List of Objects
  * @author v.shulepov
  */
-public class ObjectBoxTask3 {
+public class ObjectBox {
 
     protected ArrayList<Object> objectList;
 
     /**
      * Constructor
      */
-    public ObjectBoxTask3() {
+    public ObjectBox() {
         objectList = new ArrayList<>();
     }
 

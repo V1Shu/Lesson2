@@ -1,30 +1,40 @@
 package ru.innopolis.university.lesson3.task3;
 
-import ru.innopolis.university.lesson3.task2.ObjectBox;
+import java.util.logging.Logger;
 
 public class Main {
+    private static final Logger logger = Logger.getLogger(String.valueOf(
+            ru.innopolis.university.lesson3.task3.MathBox.class));
+
     public static void main(String[] args) throws NotNumberException {
 
-        ObjectBoxTask3 objBox = new ObjectBoxTask3();
+        ObjectBox objBox = new ObjectBox();
         testInput(objBox);
 
-        System.out.println("Input List: " + objBox.dump());
+        String info = "Input List: " + objBox.dump();
+        logger.info(info);
         objBox.deleteObject("string");
-        System.out.println("List after delete \"string\": " + objBox.dump());
+        info = "List after delete \"string\": " + objBox.dump();
+        logger.info(info);
 
         Number[] numbers = new Number[8];
         ru.innopolis.university.lesson3.task1.Main.testInput(numbers);
 
-        MathBoxTask3 mathB = new MathBoxTask3(numbers);
+        MathBox mathB = new MathBox(numbers);
 
-        System.out.println("Input ArrayList: " + mathB.dump());
+        info = "Input ArrayList: " + mathB.dump();
+        logger.info(info);
         mathB.deleteObject(5);
-        System.out.println("Array after remove element: " + mathB.dump());
+        info = "Array after remove element: " + mathB.dump();
+        logger.info(info);
         mathB.addObject(954);
-        System.out.println("Array after add new number element: " + mathB.dump());
-        System.out.println("Sum of all elements: " + mathB.summator());
+        info = "Array after add new number element: " + mathB.dump();
+        logger.info(info);
+        info = "Sum of all elements: " + mathB.summator();
+        logger.info(info);
         mathB.splitter(3.0);
-        System.out.println("ArrayList after splitter method: " + mathB.dump());
+        info = "ArrayList after splitter method: " + mathB.dump();
+        logger.info(info);
         mathB.addObject(new String());
     }
 
@@ -32,7 +42,7 @@ public class Main {
      * Add some objects in array
      * @param objBox ObjectBox needed to fill
      */
-    private static void testInput(ObjectBoxTask3 objBox) throws NotNumberException {
+    private static void testInput(ObjectBox objBox) throws NotNumberException {
         objBox.addObject(5);
         objBox.addObject("string");
         objBox.addObject(new Exception());
