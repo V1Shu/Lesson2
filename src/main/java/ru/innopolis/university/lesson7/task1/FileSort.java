@@ -1,14 +1,12 @@
 package ru.innopolis.university.lesson7.task1;
 
-import ru.innopolis.university.lesson2.task3.model.Person;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Logger;
 
-public class FileReader {
-    private static final Logger LOGGER = Logger.getLogger(String.valueOf(FileReader.class));
+public class FileSort {
+    private static final Logger LOGGER = Logger.getLogger(String.valueOf(FileSort.class));
     private static ArrayList<String> list = new ArrayList<>();
 
     public static void readFile(String nameOfFile) {
