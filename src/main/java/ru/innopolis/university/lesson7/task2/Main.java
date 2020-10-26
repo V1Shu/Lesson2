@@ -1,7 +1,9 @@
 package ru.innopolis.university.lesson7.task2;
 
-public class Main {
-    public static void main(String[] args) {
+import java.io.IOException;
 
+public class Main {
+    public static void main(String[] args) throws IOException {
+        FileGenerator.getFiles("test",2,5,null,0);
     }
 }
