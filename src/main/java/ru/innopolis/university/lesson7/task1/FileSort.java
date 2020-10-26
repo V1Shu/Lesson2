@@ -1,14 +1,12 @@
 package ru.innopolis.university.lesson7.task1;
 
-import ru.innopolis.university.lesson2.task3.model.Person;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Logger;
 
-public class FileReader {
-    private static final Logger LOGGER = Logger.getLogger(String.valueOf(FileReader.class));
+public class FileSort {
+    private static final Logger LOGGER = Logger.getLogger(String.valueOf(FileSort.class));
     private static ArrayList<String> list = new ArrayList<>();
 
     public static void readFile(String nameOfFile) {
@@ -48,9 +46,16 @@ public class FileReader {
                 .toString();
     }
 
-    public static void printList() {
-        for(String str : list) {
-            LOGGER.info(str);
+    public static void printFile(String fileName) {
+        try(DataInputStream dataInputStream = new DataInputStream(
+                new FileInputStream(fileName))) {
+            while (dataInputStream.available() > 0) {
+                LOGGER.info(dataInputStream.readUTF());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 
@@ -61,7 +66,17 @@ public class FileReader {
     }
 
     public static void saveSortedList(String nameOfFile) {
-
+        sortListByAlphabet();
+        try(DataOutputStream dataOutputStream = new DataOutputStream(
+                new FileOutputStream(nameOfFile))) {
+            for (String str : list) {
+                dataOutputStream.writeUTF(str);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 
     private static void sortListByAlphabet() {
