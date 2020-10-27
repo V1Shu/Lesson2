@@ -1,56 +1,30 @@
-package ru.innopolis.university.lesson7.task1;
+package ru.innopolis.university.lesson7.task1.model;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.logging.Logger;
 
 public class FileSort {
     private static final Logger LOGGER = Logger.getLogger(String.valueOf(FileSort.class));
-    private static ArrayList<String> list = new ArrayList<>();
+    private static ArrayList<String> list = new ArrayList();
 
     public static void readFile(String nameOfFile) {
         try(DataInputStream dataInputStream = new DataInputStream(
                 new FileInputStream(nameOfFile))) {
             while(dataInputStream.available() > 0) {
-                addWord(dataInputStream.readUTF());
+                addWord(dataInputStream.readLine());
             }
         } catch (IOException exception) {
             LOGGER.info(exception.getMessage());
         }
-        for(String str : list) {
-            LOGGER.info(str);
-        }
-    }
-
-    public static void writeTestFile(String nameOfFile, int countOfWords) {
-        try(DataOutputStream dataOutputStream = new DataOutputStream(
-                new FileOutputStream(nameOfFile))) {
-            for(int count = 0; count < countOfWords; count++) {
-                dataOutputStream.writeUTF(randomString());
-            }
-        } catch (IOException exception) {
-            LOGGER.info(exception.getMessage());
-        }
-    }
-
-    private static String randomString() {
-        Random random = new Random();
-        int leftLimit = 97; // letter 'a'
-        int rightLimit = 122; // letter 'z'
-        int targetStringLength = random.nextInt(30);
-
-        return random.ints(leftLimit, rightLimit + 1)
-                .limit(targetStringLength)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
     }
 
     public static void printFile(String fileName) {
         try(DataInputStream dataInputStream = new DataInputStream(
                 new FileInputStream(fileName))) {
             while (dataInputStream.available() > 0) {
-                LOGGER.info(dataInputStream.readUTF());
+                LOGGER.info(dataInputStream.readLine());
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -60,17 +34,17 @@ public class FileSort {
     }
 
     private static void addWord(String word) {
-        if (!list.contains(word)) {
+        if (!list.contains(word.toLowerCase())) {
             list.add(word);
         }
     }
 
     public static void saveSortedList(String nameOfFile) {
         sortListByAlphabet();
-        try(DataOutputStream dataOutputStream = new DataOutputStream(
-                new FileOutputStream(nameOfFile))) {
+        try(OutputStreamWriter dataOutputStream = new OutputStreamWriter(
+                new FileOutputStream(nameOfFile), StandardCharsets.UTF_8)) {
             for (String str : list) {
-                dataOutputStream.writeUTF(str);
+                dataOutputStream.write(str + "\n");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
