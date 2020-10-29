@@ -71,6 +71,4 @@ public class FileGenerator {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
     }
-
-
 }

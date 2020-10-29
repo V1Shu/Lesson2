@@ -38,9 +38,9 @@ public class Main {
      * @param animalList list of Animal objects
      */
     private static void testChangeAnimal(AnimalList animalList) {
-        animalList.changeAnimalName(animalList.getAnimalArrayList().get(0).getID(),"Ivan");
-        animalList.changeAnimalOwner(animalList.getAnimalArrayList().get(0).getID(), new Person());
-        animalList.changeAnimalWeight(animalList.getAnimalArrayList().get(0).getID(), 120);
+        animalList.changeAnimalName(animalList.getAnimalHashMap().entrySet().iterator().next().getKey(),"Ivan");
+        animalList.changeAnimalOwner(animalList.getAnimalHashMap().entrySet().iterator().next().getKey(), new Person());
+        animalList.changeAnimalWeight(animalList.getAnimalHashMap().entrySet().iterator().next().getKey(), 120);
     }
 
 

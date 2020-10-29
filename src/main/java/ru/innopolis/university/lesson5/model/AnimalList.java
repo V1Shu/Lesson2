@@ -3,9 +3,7 @@ package ru.innopolis.university.lesson5.model;
 import ru.innopolis.university.lesson2.task3.model.Person;
 import ru.innopolis.university.lesson5.services.AnimalException;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -13,15 +11,15 @@ import java.util.logging.Logger;
  * @author v.shulepov
  */
 public class AnimalList {
-    private static final Logger logger = Logger.getLogger(String.valueOf(AnimalList.class));
+    private static final Logger LOGGER = Logger.getLogger(String.valueOf(AnimalList.class));
 
-    public final List<Animal> animalArrayList;
+    public final Map<Integer ,Animal> animalHashMap;
 
     /**
      * Constructor
      */
     public AnimalList() {
-        this.animalArrayList = new ArrayList<>();
+        this.animalHashMap = new HashMap<>();
     }
 
     /**
@@ -30,8 +28,8 @@ public class AnimalList {
      * @throws AnimalException If Animal already in ArrayList
      */
     public void addAnimal(Animal animal) throws AnimalException {
-        if (!animalArrayList.contains(animal)) {
-            animalArrayList.add(animal);
+        if (!animalHashMap.containsValue(animal)) {
+            animalHashMap.put(animal.getID() ,animal);
        } else {
             throw new AnimalException("Animal already in the list");
         }
@@ -43,12 +41,12 @@ public class AnimalList {
      * @return Found Animal or null
      */
     public Animal findAnimalByName(String name) {
-        for (Animal animal : animalArrayList) {
-            if (animal.getName().equals(name)) {
-                return animal;
+        for (Map.Entry<Integer, Animal> animal : animalHashMap.entrySet()) {
+            if (animal.getValue().getName().equals(name)) {
+                return animalHashMap.get(animal.getKey());
             }
         }
-        logger.info("Animal is not found");
+        LOGGER.info("Animal is not found");
         return null;
     }
 
@@ -58,12 +56,10 @@ public class AnimalList {
      * @return Animal
      */
     private Animal findAnimalByID(int ID) {
-        for (Animal animal : animalArrayList) {
-            if ((animal.getID() == ID)) {
-                return animal;
-            }
+        if (animalHashMap.containsKey(ID)) {
+            return animalHashMap.get(ID);
         }
-        logger.info("Animal is not found");
+        LOGGER.info("Animal is not found");
         return null;
     }
 
@@ -107,9 +103,9 @@ public class AnimalList {
      * Print Animals, contains in list
      */
     public void printAnimalList() {
-        for (Animal animal : animalArrayList) {
-            String info = animal.toString();
-            logger.info(info);
+        for (Map.Entry<Integer, Animal> animal : animalHashMap.entrySet()) {
+            String info = animal.getValue().toString();
+            LOGGER.info(info);
         }
     }
 
@@ -117,23 +113,28 @@ public class AnimalList {
      * Sort list of Animals and print it
      */
     public void printSortAnimalList() {
-        sortAnimalList();
-        printAnimalList();
+        ArrayList<Animal> sortAnimalList = sortAnimalList();
+        for (Animal animal : sortAnimalList) {
+            String info = animal.toString();
+            LOGGER.info(info);
+        }
     }
 
     /**
      * Sort list of Animals first by owner, then by name, then by weight
      */
-    private void sortAnimalList() {
-        animalArrayList.sort(Comparator.comparing(Animal::getOwner)
+    private ArrayList<Animal> sortAnimalList() {
+        ArrayList<Animal> sortAnimalList = new ArrayList<>(animalHashMap.values());
+        sortAnimalList.sort(Comparator.comparing(Animal::getOwner)
                 .thenComparing(Animal::getName).thenComparing(Animal::getWeight));
+        return sortAnimalList;
     }
 
     /**
      * Return AnimalList
      * @return AnimalList
      */
-    public List<Animal> getAnimalArrayList() {
-        return animalArrayList;
+    public Map<Integer ,Animal> getAnimalHashMap() {
+        return animalHashMap;
     }
 }
