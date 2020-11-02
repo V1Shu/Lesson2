@@ -1,4 +1,4 @@
-package ru.innopolis.university.lesson7.task2;
+package ru.innopolis.university.lesson7.task2.model;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -6,9 +6,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import static ru.innopolis.university.lesson7.task2.service.ServiceMethods.randomWord;
+
 public class FileGenerator {
-    static final Random RANDOM = new Random();
-    List<String> wordArray = new ArrayList<>();
+    private static final Random RANDOM = new Random();
+    private static final List<String> wordArray = new ArrayList<>();
 
     public static void getFiles(String path, int n, int size, String[] words, int probability) throws IOException {
         for (int fileCount = 0; fileCount < n; fileCount++) {
@@ -61,14 +63,5 @@ public class FileGenerator {
         return sentence;
     }
 
-    private static String randomWord() {
-        int leftLimit = 97; // letter 'a'
-        int rightLimit = 122; // letter 'z'
-        int targetStringLength = RANDOM.nextInt(20) + 1;
 
-        return RANDOM.ints(leftLimit, rightLimit + 1)
-                .limit(targetStringLength)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
-    }
 }
