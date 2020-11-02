@@ -7,7 +7,9 @@ import java.util.logging.Logger;
 
 public class FileSort {
     private static final Logger LOGGER = Logger.getLogger(String.valueOf(FileSort.class));
-    private static ArrayList<String> list = new ArrayList();
+    private static final ArrayList<String> list = new ArrayList<>();
+
+    private FileSort() {}
 
     public static void readFile(String nameOfFile) {
         try(DataInputStream dataInputStream = new DataInputStream(
@@ -24,10 +26,9 @@ public class FileSort {
         try(DataInputStream dataInputStream = new DataInputStream(
                 new FileInputStream(fileName))) {
             while (dataInputStream.available() > 0) {
-                LOGGER.info(dataInputStream.readLine());
+                String info = dataInputStream.readLine();
+                LOGGER.info(info);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException exception) {
             exception.printStackTrace();
         }
@@ -46,8 +47,6 @@ public class FileSort {
             for (String str : list) {
                 dataOutputStream.write(str + "\n");
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException exception) {
             exception.printStackTrace();
         }

@@ -9,9 +9,10 @@ public class Main {
     private static final Logger LOGGER = Logger.getGlobal();
 
     public static void main(String[] args) {
-        ServiceMethods.writeTestFile("TestInputFile.txt", 50);
-        FileSort.readFile("TestInputFile.txt");
-        FileSort.printFile("TestInputFile.txt");
+        String nameOfFile = "TestInputFile.txt";
+        ServiceMethods.writeTestFile(nameOfFile, 50);
+        FileSort.readFile(nameOfFile);
+        FileSort.printFile(nameOfFile);
         LOGGER.info("===================================SORTED FILE============================================");
         FileSort.saveSortedList("SortFile.txt");
         FileSort.printFile("SortFile.txt");

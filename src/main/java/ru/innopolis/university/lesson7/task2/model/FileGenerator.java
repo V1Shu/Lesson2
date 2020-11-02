@@ -1,17 +1,30 @@
 package ru.innopolis.university.lesson7.task2.model;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 import static ru.innopolis.university.lesson7.task2.service.ServiceMethods.randomWord;
 
+/**
+ * Generate some count of file with random sentences
+ * @author v.shulepov
+ */
 public class FileGenerator {
     private static final Random RANDOM = new Random();
-    private static final List<String> wordArray = new ArrayList<>();
 
+    private FileGenerator() {}
+
+    /**
+     * Generate text files
+     * @param path direction for created files
+     * @param n count of files
+     * @param size count of paragraphs
+     * @param words array of String, which may using in sentence
+     * @param probability chance to using word from array words
+     * @throws IOException exception with file
+     */
     public static void getFiles(String path, int n, int size, String[] words, int probability) throws IOException {
         for (int fileCount = 0; fileCount < n; fileCount++) {
             File file = new File(path + "\\output" + fileCount + ".txt");
@@ -20,21 +33,25 @@ public class FileGenerator {
             try(DataOutputStream dataOutputStream = new DataOutputStream(
                     new FileOutputStream(file))) {
                 for (int paragraph = 0; paragraph < size; paragraph++) {
-                    dataOutputStream.writeUTF(generateParagraph());
+                    dataOutputStream.writeUTF(generateParagraph(words, probability));
                 }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private static String generateParagraph() {
+    /**
+     * generate paragraph with random count of sentences (up to 20)
+     * @param words array of String
+     * @param probability chance to using word from array words
+     * @return paragraph of random sentences
+     */
+    private static String generateParagraph(String[] words, int probability) {
         StringBuilder paragraph = new StringBuilder();
         int sentencesInParagraph = RANDOM.nextInt(20);
         for (int sentence = 0; sentence <= sentencesInParagraph; sentence++) {
-            paragraph.append(generateSentence());
+            paragraph.append(generateSentence(words, probability));
             if (sentence != sentencesInParagraph) {
                 paragraph.append("\n\n");
             }
@@ -42,7 +59,13 @@ public class FileGenerator {
         return paragraph.toString();
     }
 
-    private static StringBuilder generateSentence() {
+    /**
+     * Generate sentence with random words
+     * @param words array of String
+     * @param probability chance to using word from array words
+     * @return random generate sentence
+     */
+    private static StringBuilder generateSentence(String[] words, int probability) {
         StringBuilder sentence = new StringBuilder();
         int wordsInSentence = (RANDOM.nextInt(15) + 1);
         List<Character> endSymbols = Arrays.asList('.', '!', '?');
@@ -50,7 +73,10 @@ public class FileGenerator {
             if (word == (wordsInSentence)) {
                 sentence.append(endSymbols.get(RANDOM.nextInt(3)));
             } else {
-                sentence.append(randomWord());
+                String nextWord = (RANDOM.nextInt(probability) == 0) ?
+                        words[RANDOM.nextInt(words.length - 1)]
+                        : randomWord();
+                        sentence.append(nextWord);
                 if (RANDOM.nextInt(10) < 2 && word != (wordsInSentence - 1)) {
                     sentence.append(',');
                 }
@@ -62,6 +88,4 @@ public class FileGenerator {
         sentence.setCharAt(0, Character.toUpperCase(sentence.charAt(0)));
         return sentence;
     }
-
-
 }

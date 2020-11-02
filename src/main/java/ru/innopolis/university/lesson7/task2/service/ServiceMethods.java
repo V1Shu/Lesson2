@@ -1,18 +1,20 @@
 package ru.innopolis.university.lesson7.task2.service;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Service methods
+ * @author v.shulepov
+ */
 public class ServiceMethods {
     private static final Random RANDOM = new Random();
 
     private ServiceMethods() {}
 
+    /**
+     * Generate random word length from 1 to 20
+     * @return random word
+     */
     public static String randomWord() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
@@ -24,6 +26,11 @@ public class ServiceMethods {
                 .toString();
     }
 
+    /**
+     * Generate array of random words, using in filling sentences
+     * @param countOfWords int, count of words in array
+     * @return array of random words
+     */
     public static String[] generateWordArray(int countOfWords) {
         String[] wordArray = new String[countOfWords];
         for (int count = 0; count < countOfWords; count++) {
