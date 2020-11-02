@@ -5,12 +5,20 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+/**
+ * Read text file, sort and save as new file
+ * @author v.shulepov
+ */
 public class FileSort {
     private static final Logger LOGGER = Logger.getLogger(String.valueOf(FileSort.class));
     private static final ArrayList<String> list = new ArrayList<>();
 
     private FileSort() {}
 
+    /**
+     * read file
+     * @param nameOfFile file name
+     */
     public static void readFile(String nameOfFile) {
         try(DataInputStream dataInputStream = new DataInputStream(
                 new FileInputStream(nameOfFile))) {
@@ -22,6 +30,10 @@ public class FileSort {
         }
     }
 
+    /**
+     * print information from file
+     * @param fileName file name
+     */
     public static void printFile(String fileName) {
         try(DataInputStream dataInputStream = new DataInputStream(
                 new FileInputStream(fileName))) {
@@ -34,12 +46,20 @@ public class FileSort {
         }
     }
 
+    /**
+     * add word to Array list of words
+     * @param word input word
+     */
     private static void addWord(String word) {
         if (!list.contains(word.toLowerCase())) {
             list.add(word);
         }
     }
 
+    /**
+     * save sorted list to file
+     * @param nameOfFile name of saving file
+     */
     public static void saveSortedList(String nameOfFile) {
         sortListByAlphabet();
         try(OutputStreamWriter dataOutputStream = new OutputStreamWriter(
@@ -52,6 +72,9 @@ public class FileSort {
         }
     }
 
+    /**
+     * sort array list by alphabet
+     */
     private static void sortListByAlphabet() {
         for (int i = 1; i < list.size(); i++) {
             String current = list.get(i);

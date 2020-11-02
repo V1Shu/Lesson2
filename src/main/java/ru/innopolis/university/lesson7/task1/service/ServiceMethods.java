@@ -7,12 +7,21 @@ import java.nio.charset.StandardCharsets;
 import java.util.Random;
 import java.util.logging.Logger;
 
+/**
+ * Service methods
+ * @author v.shulepov
+ */
 public class ServiceMethods {
     private static final Logger LOGGER = Logger.getLogger(String.valueOf(ServiceMethods.class));
     private static final Random RANDOM = new Random();
 
     private ServiceMethods() {}
 
+    /**
+     * generate random words and write it to file
+     * @param nameOfFile name of saving file
+     * @param countOfWords count of words
+     */
     public static void writeTestFile(String nameOfFile, int countOfWords) {
         try(OutputStreamWriter outputStreamWriter = new OutputStreamWriter (
                 new FileOutputStream(nameOfFile), StandardCharsets.UTF_8)) {
@@ -24,6 +33,10 @@ public class ServiceMethods {
         }
     }
 
+    /**
+     * generate random word
+     * @return random word
+     */
     private static String randomString() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
