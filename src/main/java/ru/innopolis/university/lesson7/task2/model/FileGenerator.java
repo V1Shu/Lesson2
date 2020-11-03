@@ -28,7 +28,7 @@ public class FileGenerator {
     public static void getFiles(String path, int n, int size, String[] words, int probability) throws IOException {
         for (int fileCount = 0; fileCount < n; fileCount++) {
             File file = new File(path + "\\output" + fileCount + ".txt");
-            file.getParentFile().mkdirs();
+            //file.getParentFile().mkdirs();
             file.createNewFile();
             try(DataOutputStream dataOutputStream = new DataOutputStream(
                     new FileOutputStream(file))) {
