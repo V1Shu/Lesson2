@@ -12,6 +12,6 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
         FileGenerator.getFiles("homework\\src\\main\\java\\ru\\innopolis\\university\\lesson7\\task2\\test",
-                2,5, ServiceMethods.generateWordArray(1000),2);
+                1,5, ServiceMethods.generateWordArray(1000),2);
     }
 }
