@@ -1,6 +1,7 @@
 package ru.innopolis.university.lesson7.task2.model;
 
 import java.io.*;
+import java.nio.channels.FileChannel;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -27,8 +28,8 @@ public class FileGenerator {
      * @throws IOException exception with file
      */
     public static void getFiles(String path, int n, int size, String[] words, int probability) throws IOException {
-        for (int fileCount = 0; fileCount < n; fileCount++) {
-            String pathName = "";
+        for (int fileCount = 1; fileCount <= n; fileCount++) {
+            String pathName;
             if (getOSName().startsWith("Windows")) {
                 pathName = path + "\\output" + fileCount + ".txt";
             } else {
@@ -39,8 +40,11 @@ public class FileGenerator {
             file.createNewFile();
             try(DataOutputStream dataOutputStream = new DataOutputStream(
                     new FileOutputStream(file))) {
-                for (int paragraph = 1; paragraph <= size; paragraph++) {
+                for (int paragraph = 0; paragraph <= RANDOM.nextInt(20) + 1; paragraph++) {
                     dataOutputStream.writeUTF(generateParagraph(words, probability));
+                }
+                try (FileChannel outChan = new FileOutputStream(file, true).getChannel()) {
+                    outChan.truncate(size);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

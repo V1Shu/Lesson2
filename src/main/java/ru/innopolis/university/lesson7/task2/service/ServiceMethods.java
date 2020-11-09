@@ -39,6 +39,10 @@ public class ServiceMethods {
         return wordArray;
     }
 
+    /**
+     * get name of current OS
+     * @return OS name
+     */
     public static String getOSName() {
         return System.getProperty("os.name");
     }
