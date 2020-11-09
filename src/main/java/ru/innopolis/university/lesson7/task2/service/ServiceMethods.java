@@ -38,4 +38,8 @@ public class ServiceMethods {
         }
         return wordArray;
     }
+
+    public static String getOSName() {
+        return System.getProperty("os.name");
+    }
 }

@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class Main {
     private static final String PATH = "test";
-    private static final int COUNT_OF_FILES = 3;
+    private static final int COUNT_OF_FILES = 5;
     private static final int SIZE_OF_FILE = 5;
     private static final int COUNT_OF_WORDS_IN_ARRAY = 1000;
     private static final int PROBABILITY = 2;

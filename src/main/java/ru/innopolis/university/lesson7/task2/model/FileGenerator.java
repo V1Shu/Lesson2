@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import static ru.innopolis.university.lesson7.task2.service.ServiceMethods.getOSName;
 import static ru.innopolis.university.lesson7.task2.service.ServiceMethods.randomWord;
 
 /**
@@ -27,12 +28,18 @@ public class FileGenerator {
      */
     public static void getFiles(String path, int n, int size, String[] words, int probability) throws IOException {
         for (int fileCount = 0; fileCount < n; fileCount++) {
-            File file = new File(path + "\\output" + fileCount + ".txt");
-            //file.getParentFile().mkdirs();
+            String pathName = "";
+            if (getOSName().startsWith("Windows")) {
+                pathName = path + "\\output" + fileCount + ".txt";
+            } else {
+                pathName = path + "/output" + fileCount + ".txt";
+            }
+            File file = new File(pathName);
+            file.getParentFile().mkdirs();
             file.createNewFile();
             try(DataOutputStream dataOutputStream = new DataOutputStream(
                     new FileOutputStream(file))) {
-                for (int paragraph = 0; paragraph < size; paragraph++) {
+                for (int paragraph = 1; paragraph <= size; paragraph++) {
                     dataOutputStream.writeUTF(generateParagraph(words, probability));
                 }
             } catch (IOException e) {
