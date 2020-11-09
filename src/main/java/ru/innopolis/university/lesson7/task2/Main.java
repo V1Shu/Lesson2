@@ -10,8 +10,17 @@ import java.io.IOException;
  * @author v.shulepov
  */
 public class Main {
+    private static final String PATH = "test";
+    private static final int COUNT_OF_FILES = 3;
+    private static final int SIZE_OF_FILE = 5;
+    private static final int COUNT_OF_WORDS_IN_ARRAY = 1000;
+    private static final int PROBABILITY = 2;
+
     public static void main(String[] args) throws IOException {
-        FileGenerator.getFiles("homework\\src\\main\\java\\ru\\innopolis\\university\\lesson7\\task2\\test",
-                1,5, ServiceMethods.generateWordArray(1000),2);
+        FileGenerator.getFiles(PATH,
+                COUNT_OF_FILES,
+                SIZE_OF_FILE,
+                ServiceMethods.generateWordArray(COUNT_OF_WORDS_IN_ARRAY),
+                PROBABILITY);
     }
 }
