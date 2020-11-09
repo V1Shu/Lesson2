@@ -10,7 +10,7 @@ import java.io.IOException;
  * @author v.shulepov
  */
 public class Main {
-    private static final String PATH = "test";
+    private static final String PATH = System.getProperty("user.home");
     private static final int COUNT_OF_FILES = 5;
     /**
      * size of output file in bytes

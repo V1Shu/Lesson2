@@ -31,9 +31,9 @@ public class FileGenerator {
         for (int fileCount = 1; fileCount <= n; fileCount++) {
             String pathName;
             if (getOSName().startsWith("Windows")) {
-                pathName = path + "\\output" + fileCount + ".txt";
+                pathName = path + "\\lesson7" + "\\output" + fileCount + ".txt";
             } else {
-                pathName = path + "/output" + fileCount + ".txt";
+                pathName = path + "/lesson7" + "/output" + fileCount + ".txt";
             }
             File file = new File(pathName);
             file.getParentFile().mkdirs();
