@@ -19,12 +19,14 @@ public class Main {
      * count of elements in integer ArrayList
      */
     private static final int COUNT_OF_ARRAY_ELEMENTS = 1000;
+    private static long startTime = 0;
 
     public static void main(String[] args) {
         ArrayList<Integer> integerArray = new ArrayList<>();
         ServiceMethods.fillNumberArray(integerArray, COUNT_OF_ARRAY_ELEMENTS);
         integerArray.forEach(System.out::println);
-        System.out.println("====================================================");
+        System.out.println("========================RESULT============================");
+        startTime = System.currentTimeMillis();
         ExecutorService executorService = Executors.newFixedThreadPool(COUNT_OF_THREADS);
         for (int count = 0; count < integerArray.size(); count++) {
             int finalCount = count;
