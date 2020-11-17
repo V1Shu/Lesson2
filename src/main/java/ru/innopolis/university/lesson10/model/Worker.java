@@ -1,4 +1,4 @@
-package ru.innopolis.university.lesson10;
+package ru.innopolis.university.lesson10.model;
 
 public interface Worker {
     default void doWork() {

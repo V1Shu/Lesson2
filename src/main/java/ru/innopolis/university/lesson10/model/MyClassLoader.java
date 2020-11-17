@@ -1,4 +1,4 @@
-package ru.innopolis.university.lesson10;
+package ru.innopolis.university.lesson10.model;
 
 import java.io.BufferedInputStream;
 import java.io.File;
