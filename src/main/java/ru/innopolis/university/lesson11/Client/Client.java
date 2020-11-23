@@ -15,9 +15,10 @@ public class Client {
         BufferedReader bufferedReader =
                 new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
+        System.out.println("Type your name: ");
         Scanner scanner = new Scanner(System.in);
         String message;
-        System.out.println("Type your name: ");
+
         while (!(message = scanner.nextLine()).isEmpty()) {
             bufferedWriter.write(message);
             bufferedWriter.newLine();
