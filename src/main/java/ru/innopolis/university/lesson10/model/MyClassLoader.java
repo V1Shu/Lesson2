@@ -5,6 +5,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/**
+ * Loader for new SomeClass
+ * @author v.shulepov
+ */
 public class MyClassLoader extends ClassLoader {
 
     @Override

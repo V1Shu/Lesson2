@@ -1,6 +1,7 @@
 package ru.innopolis.university.lesson10;
 
 import ru.innopolis.university.lesson10.model.MyClassLoader;
+import ru.innopolis.university.lesson10.model.Worker;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
@@ -11,18 +12,22 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static ru.innopolis.university.lesson7.task2.service.ServiceMethods.getOSName;
-
+/**
+ * @author v.shulepov
+ */
 public class Main {
     private final static Scanner SCANNER = new Scanner(System.in);
+    /**
+     * array for code, readied from console
+     */
     private final static ArrayList<String> CODE_ARRAY = new ArrayList<>();
     private static File workerFile = null;
 
     public static void main(String[] args) {
         findFileWorker(new File(System.getProperty("user.dir")));
-        readWorkerFile();
+        readCodeFromConsole();
 
-        File file = fillSomeClassFile();
+        File file = enterCodeToSomeClassFile();
 
         compileSomeClass(file);
 
@@ -37,41 +42,58 @@ public class Main {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        //ru.innopolis.university.lesson10.SomeClass someClassTest = (ru.innopolis.university.lesson10.SomeClass) obj;
+        Worker someClassTest = (Worker) obj;
 
         try {
             Method someMethod = someClass.getDeclaredMethod("doWork");
-            //someMethod.invoke(someClassTest);
+            someMethod.invoke(someClassTest);
         } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * load new SomeClass by loader
+     * @return class SomeClass
+     */
     private static Class<?> loadSomeClass() {
         MyClassLoader classLoader = new MyClassLoader();
 
         Class<?> someClass = null;
         try {
-            someClass = Class.forName("ru.innopolis.university.lesson10.SomeClass", true, classLoader);
+            someClass = Class.forName("ru.innopolis.university.lesson10.model.SomeClass", true, classLoader);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return someClass;
     }
 
+    /**
+     * compile file SomeClass.java to SomeClass.class
+     * @param file file SomeClass.java
+     */
     private static void compileSomeClass(File file) {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         compiler.run(null, null, null, file.getPath());
     }
 
-    private static File fillSomeClassFile() {
+    /**
+     * write code to file SomeClass.java
+     * @return file with code
+     */
+    private static File enterCodeToSomeClassFile() {
         File file = new File(workerFile.getParent() + getSomeClassFileName());
         file.getParentFile().mkdirs();
         try (OutputStreamWriter dataOutputStream = new OutputStreamWriter(
                 new FileOutputStream(file), StandardCharsets.UTF_8)) {
             file.createNewFile();
-            dataOutputStream.write("package ru.innopolis.university.lesson10;");
-            dataOutputStream.write("public class SomeClass {");
+            dataOutputStream.write("package ru.innopolis.university.lesson10.model;");
+            dataOutputStream.write("import ru.innopolis.university.lesson10.model.Worker;");
+            dataOutputStream.write("public class SomeClass implements Worker {");
             dataOutputStream.write("public void doWork() {");
             for (String codeStr : CODE_ARRAY) {
                 dataOutputStream.write(codeStr);
@@ -84,40 +106,32 @@ public class Main {
         return file;
     }
 
+    /**
+     * get name of class with separator
+     * @return file name
+     */
     private static String getSomeClassFileName() {
-        String someClassName = "SomeClass.java";
-        if (getOSName().startsWith("Windows")) {
-            someClassName = "\\" + someClassName;
-        } else {
-            someClassName = "/" + someClassName;
-        }
-        return someClassName;
+        return java.io.File.separator + "SomeClass.java";
     }
 
-    private static void readWorkerFile() {
-        String str = "";
-        try (DataInputStream dataInputStream = new DataInputStream(
-                new FileInputStream(workerFile))) {
-            boolean readMethodWork = false;
-            while (dataInputStream.available() > 0) {
-                str = dataInputStream.readLine();
-                if (str.contains("doWork")) {
-                    readMethodWork = true;
-                    continue;
-                } else if (str.contains("};")) {
-                    readMethodWork = false;
-                }
-                if (readMethodWork) {
-                    CODE_ARRAY.add(str);
-                }
+    /**
+     * read code from console
+     */
+    private static void readCodeFromConsole() {
+        Scanner scanner = new Scanner(System.in);
+        String inputLine = "";
+        do {
+            inputLine = scanner.nextLine();
+            if (!"".equals(inputLine)) {
+                CODE_ARRAY.add(inputLine);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } while("".equals(inputLine));
     }
 
+    /**
+     * find file Worker.java
+     * @param dir directory to search file
+     */
     private static void findFileWorker(File dir) {
         for (File fileInDir : dir.listFiles()) {
             if (fileInDir.isDirectory()) {

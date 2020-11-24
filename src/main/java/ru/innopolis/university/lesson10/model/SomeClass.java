@@ -1,0 +1,1 @@
+package ru.innopolis.university.lesson10.model;import ru.innopolis.university.lesson10.model.Worker;public class SomeClass implements Worker {public void doWork() {System.out.println("Hello");}}
