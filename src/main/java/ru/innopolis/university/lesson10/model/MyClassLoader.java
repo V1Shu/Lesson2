@@ -1,5 +1,8 @@
 package ru.innopolis.university.lesson10.model;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,6 +13,7 @@ import java.io.IOException;
  * @author v.shulepov
  */
 public class MyClassLoader extends ClassLoader {
+    private static final Logger LOGGER = LogManager.getLogger(MyClassLoader.class);
 
     @Override
     protected Class<?> findClass(String name) {
@@ -17,11 +21,13 @@ public class MyClassLoader extends ClassLoader {
         try (BufferedInputStream bufferedInputStream = new BufferedInputStream(
                         new FileInputStream(classFile))) {
             byte[] content = new byte[(int) classFile.length()];
-            bufferedInputStream.read(content);
-            final Class<?> someClass = defineClass(name, content, 0, content.length);
+            Class<?> someClass = null;
+            while (bufferedInputStream.read(content) > 0) {
+                someClass = defineClass(name, content, 0, content.length);
+            }
             return someClass;
         } catch (IOException e) {
-            System.out.println("Что-то пошло не так");
+            LOGGER.info("Что-то пошло не так");
             return null;
         }
     }

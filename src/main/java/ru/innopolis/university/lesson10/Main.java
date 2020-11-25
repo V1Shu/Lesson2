@@ -1,5 +1,7 @@
 package ru.innopolis.university.lesson10;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ru.innopolis.university.lesson10.model.MyClassLoader;
 import ru.innopolis.university.lesson10.model.Worker;
 
@@ -16,15 +18,13 @@ import java.util.Scanner;
  * @author v.shulepov
  */
 public class Main {
-    private final static Scanner SCANNER = new Scanner(System.in);
+    private static final Logger LOGGER = LogManager.getLogger(Main.class);
     /**
      * array for code, readied from console
      */
-    private final static ArrayList<String> CODE_ARRAY = new ArrayList<>();
-    private static File workerFile = null;
+    private static final ArrayList<String> CODE_ARRAY = new ArrayList<>();
 
-    public static void main(String[] args) {
-        findFileWorker(new File(System.getProperty("user.dir")));
+    public static void main(String[] args){
         readCodeFromConsole();
 
         File file = enterCodeToSomeClassFile();
@@ -36,23 +36,17 @@ public class Main {
         Object obj = null;
         try {
             obj = someClass.newInstance();
-
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (InstantiationException | IllegalAccessException e) {
+            LOGGER.info("Can't create instance of SomeClass");
         }
+
         Worker someClassTest = (Worker) obj;
 
         try {
             Method someMethod = someClass.getDeclaredMethod("doWork");
             someMethod.invoke(someClassTest);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            LOGGER.info("Can't call method from SomeClass");
         }
     }
 
@@ -67,7 +61,7 @@ public class Main {
         try {
             someClass = Class.forName("ru.innopolis.university.lesson10.model.SomeClass", true, classLoader);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.info("SomeClass not found");
         }
         return someClass;
     }
@@ -86,7 +80,7 @@ public class Main {
      * @return file with code
      */
     private static File enterCodeToSomeClassFile() {
-        File file = new File(workerFile.getParent() + getSomeClassFileName());
+        File file = new File(getPathToSomeClass());
         file.getParentFile().mkdirs();
         try (OutputStreamWriter dataOutputStream = new OutputStreamWriter(
                 new FileOutputStream(file), StandardCharsets.UTF_8)) {
@@ -101,17 +95,14 @@ public class Main {
             dataOutputStream.write("}");
             dataOutputStream.write("}");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.info("Can't write file SomeClass.java");
         }
         return file;
     }
 
-    /**
-     * get name of class with separator
-     * @return file name
-     */
-    private static String getSomeClassFileName() {
-        return java.io.File.separator + "SomeClass.java";
+    private static String getPathToSomeClass() {
+        return Main.class.getClassLoader().getResource("path").getPath().replace("path","") +
+                "ru\\innopolis\\university\\lesson10\\model\\SomeClass.java";
     }
 
     /**
@@ -126,21 +117,5 @@ public class Main {
                 CODE_ARRAY.add(inputLine);
             }
         } while("".equals(inputLine));
-    }
-
-    /**
-     * find file Worker.java
-     * @param dir directory to search file
-     */
-    private static void findFileWorker(File dir) {
-        for (File fileInDir : dir.listFiles()) {
-            if (fileInDir.isDirectory()) {
-                findFileWorker(fileInDir);
-            } else {
-                if (fileInDir.getName().startsWith("Worker") && fileInDir.getName().endsWith("java")) {
-                    workerFile = fileInDir;
-                }
-            }
-        }
     }
 }
