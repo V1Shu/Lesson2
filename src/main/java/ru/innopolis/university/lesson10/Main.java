@@ -102,7 +102,12 @@ public class Main {
 
     private static String getPathToSomeClass() {
         return Main.class.getClassLoader().getResource("path").getPath().replace("path","") +
-                "ru\\innopolis\\university\\lesson10\\model\\SomeClass.java";
+                "ru" + File.separator +
+                "innopolis" + File.separator +
+                "university" + File.separator +
+                "lesson10" +File.separator +
+                "model" + File.separator +
+                "SomeClass.java";
     }
 
     /**
