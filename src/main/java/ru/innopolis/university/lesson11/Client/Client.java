@@ -50,13 +50,16 @@ public class Client {
 
         // while new messages
         while (sc.hasNextLine()) {
-            output.println(sc.nextLine());
-        }
+            String message = sc.nextLine();
+            if ("exit".equals(message)) {
+                output.close();
+                sc.close();
+                client.close();
+            } else {
+                output.println(message);
+            }
 
-        // end ctrl D
-        output.close();
-        sc.close();
-        client.close();
+        }
     }
 }
 
@@ -75,24 +78,25 @@ class ReceivedMessagesHandler implements Runnable {
         while (s.hasNextLine()) {
             tmp = s.nextLine();
             if (tmp.charAt(0) == '[') {
-                tmp = tmp.substring(1, tmp.length()-1);
-                System.out.println(
+                //tmp = tmp.substring(1, tmp.length()-1);
+                /*System.out.println(
                         "\nUSERS LIST: " +
                                 new ArrayList<String>(Arrays.asList(tmp.split(","))) + "\n"
-                );
+                );*/
+                System.out.println(tmp);
             }else{
                 try {
-                    System.out.println("\n" + getTagValue(tmp));
-                    // System.out.println(tmp);
+                    //System.out.println("\n" + getTagValue(tmp));
+                    System.out.println(tmp);
                 } catch(Exception ignore){}
             }
         }
         s.close();
     }
 
-    // I could use a javax.xml.parsers but the goal of Client.java is to keep everything tight and simple
+    /*// I could use a javax.xml.parsers but the goal of Client.java is to keep everything tight and simple
     public static String getTagValue(String xml){
         return  xml.split(">")[2].split("<")[0] + xml.split("<span>")[1].split("</span>")[0];
-    }
+    }*/
 
 }
