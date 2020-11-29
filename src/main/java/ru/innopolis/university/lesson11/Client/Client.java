@@ -1,66 +1,98 @@
 package ru.innopolis.university.lesson11.Client;
 
-import ru.innopolis.university.lesson11.Server.Server;
-
-import java.io.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+import java.io.StringReader;
+
+import static ru.innopolis.university.lesson11.Server.Server.SERVER_PORT;
 
 public class Client {
-    private final static Scanner scanner = new Scanner(System.in);
-    private static BufferedReader reader;
-    private static BufferedWriter writer;
 
-    public static void main(String[] args) {
-        new Client();
+    private String host;
+    private int port;
+
+    public static void main(String[] args) throws UnknownHostException, IOException {
+        new Client("127.0.0.1", SERVER_PORT).run();
     }
 
-   public Client() {
-       try {
-           Socket socket = new Socket("localhost", Server.SERVER_PORT);
+    public Client(String host, int port) {
+        this.host = host;
+        this.port = port;
+    }
 
-           writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-           reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+    public void run() throws UnknownHostException, IOException {
+        // connect client to server
+        Socket client = new Socket(host, port);
+        System.out.println("Client successfully connected to server!");
 
-           System.out.println("Type your name: ");
-           writer.write(scanner.nextLine());
+        // Get Socket output stream (where the client send her mesg)
+        PrintStream output = new PrintStream(client.getOutputStream());
 
-           Resender resend = new Resender();
-           resend.start();
+        // ask for a nickname
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a nickname: ");
+        String nickname = sc.nextLine();
 
-           String message = "";
-           while (!message.equals("exit")) {
-               message = scanner.nextLine();
-               writer.write(message);
-               writer.flush();
-           }
-           resend.setStop();
-       } catch (UnknownHostException e) {
-           e.printStackTrace();
-       } catch (IOException e) {
-           e.printStackTrace();
-       }
-   }
+        // send nickname to server
+        output.println(nickname);
 
-    private class Resender extends Thread {
+        // create a new thread for server messages handling
+        new Thread(new ReceivedMessagesHandler(client.getInputStream())).start();
 
-        private boolean stoped;
+        // read messages from keyboard and send to server
+        System.out.println("Messages: \n");
 
-        public void setStop() {
-            stoped = true;
+        // while new messages
+        while (sc.hasNextLine()) {
+            output.println(sc.nextLine());
         }
 
-        @Override
-        public void run() {
-            try {
-                while (!stoped) {
-                    String str = reader.readLine();
-                    System.out.println(str);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        // end ctrl D
+        output.close();
+        sc.close();
+        client.close();
+    }
+}
+
+class ReceivedMessagesHandler implements Runnable {
+
+    private InputStream server;
+
+    public ReceivedMessagesHandler(InputStream server) {
+        this.server = server;
+    }
+
+    public void run() {
+        // receive server messages and print out to screen
+        Scanner s = new Scanner(server);
+        String tmp = "";
+        while (s.hasNextLine()) {
+            tmp = s.nextLine();
+            if (tmp.charAt(0) == '[') {
+                tmp = tmp.substring(1, tmp.length()-1);
+                System.out.println(
+                        "\nUSERS LIST: " +
+                                new ArrayList<String>(Arrays.asList(tmp.split(","))) + "\n"
+                );
+            }else{
+                try {
+                    System.out.println("\n" + getTagValue(tmp));
+                    // System.out.println(tmp);
+                } catch(Exception ignore){}
             }
         }
+        s.close();
     }
+
+    // I could use a javax.xml.parsers but the goal of Client.java is to keep everything tight and simple
+    public static String getTagValue(String xml){
+        return  xml.split(">")[2].split("<")[0] + xml.split("<span>")[1].split("</span>")[0];
+    }
+
 }
