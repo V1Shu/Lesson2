@@ -1,10 +1,9 @@
-package ru.innopolis.university.lesson11.Server;
+package ru.innopolis.university.lesson11.server;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.ServerSocket;
@@ -12,62 +11,79 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.awt.Color;
 
+/**
+ * Server path of chat
+ * @author v.shulepov
+ */
 public class Server {
     private static final Logger LOGGER = LogManager.getLogger(Server.class);
-
-    private int port;
-    private List<User> clients;
-    private ServerSocket server;
+    /**
+     * list of connected client
+     */
+    private final List<User> clients;
+    private ServerSocket serverSocket;
     public static final int SERVER_PORT = 8286;
 
-    public static void main(String[] args) throws IOException {
-        new Server(SERVER_PORT).run();
+    public static void main(String[] args){
+        new Server().run();
     }
 
-    public Server(int port) {
-        this.port = port;
-        this.clients = new ArrayList<User>();
+    /**
+     * Create new list of users on start server
+     */
+    public Server() {
+        this.clients = new ArrayList<>();
     }
 
-    public void run() throws IOException {
-        server = new ServerSocket(port) {
-            protected void finalize() throws IOException {
-                this.close();
-            }
-        };
-        System.out.println("Port" + SERVER_PORT + " is now open.");
+    /**
+     * start server, create sockets, waiting for users
+     */
+    public void run(){
+        try {
+            serverSocket = new ServerSocket(SERVER_PORT);
+        } catch (IOException e) {
+            LOGGER.info("Can't open ServerSocket");
+        }
+        LOGGER.info("Port" + SERVER_PORT + " is now open.");
 
         while (true) {
-            // accepts a new client
-            Socket client = server.accept();
+            Socket client = null;
+            try {
+                client = serverSocket.accept();
+            } catch (IOException e) {
+                LOGGER.info("Can't create client");
+            }
 
-            // get nickname of newUser
-            String nickname = (new Scanner ( client.getInputStream() )).nextLine();
-            /*nickname = nickname.replace(",", ""); //  ',' use for serialisation
-            nickname = nickname.replace(" ", "_");*/
-            System.out.println("New Client: \"" + nickname + "\"\n\t     Host:" + client.getInetAddress().getHostAddress());
+            String nickname = null;
+            try {
+                nickname = (new Scanner( client.getInputStream() )).nextLine();
+            } catch (IOException e) {
+                LOGGER.info("Can't take nickname line");
+            }
+            LOGGER.info("New Client: \"" + nickname + "\"\n\t     Host:" + client.getInetAddress().getHostAddress());
 
-            // create new User
             User newUser = new User(client, nickname);
 
-            // add newUser message to list
             this.clients.add(newUser);
 
-            // create a new thread for newUser incoming messages handling
             new Thread(new UserHandler(this, newUser)).start();
         }
     }
 
-    // delete a user from the list
-    public void removeUser(User user){
+    /**
+     * remove users from list of connected users
+     * @param user
+     */
+    public void removeUser(User user) {
         this.clients.remove(user);
     }
 
-    // send incoming msg to all Users
+    /**
+     * send input message to all connected users
+     * @param msg input message
+     * @param userSender sender of message
+     */
     public void broadcastMessages(String msg, User userSender) {
         for (User client : this.clients) {
             client.getOutStream().println(
@@ -75,14 +91,21 @@ public class Server {
         }
     }
 
-    // send list of clients to all Users
-    public void broadcastAllUsers(){
+    /**
+     * print list of connected users
+     */
+    public void broadcastAllUsers() {
         for (User client : this.clients) {
             client.getOutStream().println(this.clients);
         }
     }
 
-    // send message to a User (String)
+    /**
+     * send private message
+     * @param msg input message
+     * @param userSender sender of message
+     * @param user target user
+     */
     public void sendMessageToUser(String msg, User userSender, String user){
         boolean find = false;
         for (User client : this.clients) {
@@ -99,10 +122,15 @@ public class Server {
     }
 }
 
+/**
+ * User Handler
+ * @author v.shulepov
+ */
 class UserHandler implements Runnable {
+    private static final Logger LOGGER = LogManager.getLogger(UserHandler.class);
 
-    private Server server;
-    private User user;
+    private final Server server;
+    private final User user;
 
     public UserHandler(Server server, User user) {
         this.server = server;
@@ -110,57 +138,61 @@ class UserHandler implements Runnable {
         this.server.broadcastAllUsers();
     }
 
+    /**
+     * Used for read message and sent
+     * To send private print "@<username> message"
+     */
     public void run() {
         String message;
 
-        // when there is a new message, broadcast to all
         Scanner sc = new Scanner(this.user.getInputStream());
         while (sc.hasNextLine()) {
             message = sc.nextLine();
 
-            // Sent private message
             if (message.charAt(0) == '@'){
                 if(message.contains(" ")){
-                    System.out.println("private msg : " + message);
+                    LOGGER.info("private msg : " + message);
                     int firstSpace = message.indexOf(" ");
                     String userPrivate= message.substring(1, firstSpace);
                     server.sendMessageToUser(
                             message.substring(
-                                    firstSpace+1, message.length()
-                            ), user, userPrivate
+                                    firstSpace+1), user, userPrivate
                     );
                 }
             }else{
-                // update user list
                 server.broadcastMessages(message, user);
             }
         }
-        // end of Thread
         server.removeUser(user);
         this.server.broadcastAllUsers();
         sc.close();
     }
 }
 
+/**
+ * User
+ * @author v.shulepov
+ */
 class User {
-    private static int nbUser = 0;
-    private int userId;
+    private static final Logger LOGGER = LogManager.getLogger(User.class);
+
     private PrintStream streamOut;
     private InputStream streamIn;
     private String nickname;
-    private Socket client;
 
-    // constructor
-    public User(Socket client, String name) throws IOException {
-        this.streamOut = new PrintStream(client.getOutputStream());
-        this.streamIn = client.getInputStream();
-        this.client = client;
-        this.nickname = name;
-        this.userId = nbUser;
-        nbUser += 1;
+    public User(Socket client, String name){
+        try {
+            this.streamOut = new PrintStream(client.getOutputStream());
+            this.streamIn = client.getInputStream();
+            this.nickname = name;
+        } catch (IOException e) {
+            LOGGER.info("Can't create user");
+        }
     }
 
-    // Getters
+    /**
+     * Getters
+     */
     public PrintStream getOutStream(){
         return this.streamOut;
     }
@@ -173,7 +205,6 @@ class User {
         return this.nickname;
     }
 
-    // print user with his color
     public String toString(){
         return this.getNickname();
     }
