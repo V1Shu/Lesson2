@@ -118,9 +118,9 @@ public class Main {
         String inputLine = "";
         do {
             inputLine = scanner.nextLine();
-            if (!"".equals(inputLine)) {
+            if (!inputLine.isEmpty()) {
                 CODE_ARRAY.add(inputLine);
             }
-        } while("".equals(inputLine));
+        } while(!inputLine.isEmpty());
     }
 }
