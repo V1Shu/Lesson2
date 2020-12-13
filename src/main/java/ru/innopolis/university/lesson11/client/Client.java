@@ -21,11 +21,19 @@ public class Client {
         new Client("127.0.0.1", SERVER_PORT).run();
     }
 
+    /**
+     * client constructor
+     * @param host server address
+     * @param port server port
+     */
     public Client(String host, int port) {
         this.host = host;
         this.port = port;
     }
 
+    /**
+     * run client
+     */
     public void run(){
         Socket client = null;
         try {
@@ -75,6 +83,9 @@ public class Client {
     }
 }
 
+/**
+ * class for take input message
+ */
 class ReceivedMessagesHandler implements Runnable {
     private static final Logger LOGGER = LogManager.getLogger(ReceivedMessagesHandler.class);
 
@@ -84,6 +95,9 @@ class ReceivedMessagesHandler implements Runnable {
         this.server = server;
     }
 
+    /**
+     * run handler
+     */
     public void run() {
         Scanner s = new Scanner(server);
         while (s.hasNextLine()) {
