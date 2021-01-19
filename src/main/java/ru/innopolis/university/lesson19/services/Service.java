@@ -44,6 +44,12 @@ public class Service {
                 + "CREATE TABLE product_order ("
                 + "id serial primary key,"
                 + "buyer serial REFERENCES buyer(id),"
-                + "product serial REFERENCES product (id));";
+                + "product serial REFERENCES product (id));"
+                + "INSERT INTO product_order (buyer, product)"
+                + "VALUES"
+                + "(1, 1),"
+                + "(1, 3),"
+                + "(2, 1),"
+                + "(2, 2);";
     }
 }
