@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+        <File name="FileAppender" fileName="src/main/java/ru/innopolis/university/lesson22/log-${date:yyyyMMdd}.log" immediateFlush="false" append="true">
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <JDBC name="db" tableName="logger">
+            <DriverManager connectionString="jdbc:postgresql://localhost:5432/postgres" driverClassName="org.postgresql.Driver"
+                           username="postgres" password="postgres"/>
+            <Column name="entry_date" isEventTimestamp="true" isUnicode="false"/>
+            <Column name="logger" pattern="%logger" isUnicode="false"/>
+            <Column name="log_level" pattern="%level" isUnicode="false"/>
+            <Column name="message" pattern="%m" isUnicode="false"/>
+            <Column name="exception" pattern="%throwable" isUnicode="false"/>
+        </JDBC>
+    </Appenders>
+    <Loggers>
+        <Logger name="system" level="debug" additivity="debug">
+            <Appender-Ref ref="FileAppender"/>
+        </Logger>
+        <Logger name="security" level="info" additivity="info">
+            <Appender-Ref ref="ConsoleAppender"/>
+        </Logger>
+        <Logger name="events" level="warn" additivity="error">
+            <Appender-Ref ref="db"/>
+        </Logger>
+        <Root>
+            <AppenderRef ref="ConsoleAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>
