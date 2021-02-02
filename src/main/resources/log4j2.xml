@@ -4,9 +4,12 @@
         <Console name="ConsoleAppender" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
         </Console>
-        <File name="FileAppender" fileName="src/main/java/ru/innopolis/university/lesson22/log-${date:yyyyMMdd}.log" immediateFlush="false" append="true">
-            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
-        </File>
+        <RollingFile name="FileAppender" fileName="log.log" filePattern="./log-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
         <JDBC name="db" tableName="logger">
             <DriverManager connectionString="jdbc:postgresql://localhost:5432/postgres" driverClassName="org.postgresql.Driver"
                            username="postgres" password="postgres"/>
@@ -18,17 +21,18 @@
         </JDBC>
     </Appenders>
     <Loggers>
-        <Logger name="system" level="debug" additivity="debug">
+        <Root level="trace">
+            <AppenderRef ref="FileAppender" level="TRACE"/>
+            <AppenderRef ref="ConsoleAppender" level="DEBUG"/>
+        </Root>
+        <Logger name="system" level="debug" additivity="false">
             <Appender-Ref ref="FileAppender"/>
         </Logger>
-        <Logger name="security" level="info" additivity="info">
+        <Logger name="security" level="info" additivity="false">
             <Appender-Ref ref="ConsoleAppender"/>
         </Logger>
-        <Logger name="events" level="warn" additivity="error">
+        <Logger name="events" level="warn" additivity="false">
             <Appender-Ref ref="db"/>
         </Logger>
-        <Root>
-            <AppenderRef ref="ConsoleAppender"/>
-        </Root>
     </Loggers>
 </Configuration>
