@@ -1,10 +1,15 @@
 package ru.innopolis.university.lesson22.services;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Service {
+
+    private static final Logger LOGGER = LogManager.getLogger("info");
 
     public static void createBase(Connection connection) {
         try (Statement statement = connection.createStatement();) {
@@ -13,7 +18,7 @@ public class Service {
             statement.execute(getTableOrder());
             statement.execute(getTableLogger());
         } catch (SQLException throwables) {
-            throwables.getStackTrace();
+            LOGGER.error(throwables.getStackTrace());
         }
     }
 

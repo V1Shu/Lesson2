@@ -31,7 +31,7 @@
         <Logger name="security" level="info" additivity="false">
             <Appender-Ref ref="ConsoleAppender"/>
         </Logger>
-        <Logger name="events" level="warn" additivity="false">
+        <Logger name="events" level="info" additivity="false">
             <Appender-Ref ref="db"/>
         </Logger>
     </Loggers>

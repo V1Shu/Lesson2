@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class ConnectionManagerImpl  implements ConnectionManager {
 
-    private static final Logger LOGGER = LogManager.getRootLogger();
+    private static final Logger LOGGER = LogManager.getLogger("system");
 
     public static final ConnectionManager INSTANCE = new ConnectionManagerImpl();
 
@@ -28,7 +28,7 @@ public class ConnectionManagerImpl  implements ConnectionManager {
         } catch (SQLException throwables) {
             LOGGER.error(throwables.getMessage());
         }
-        //LOGGER.info("Connection create");
+        LOGGER.info("Connection create");
         return connection;
     }
 }
