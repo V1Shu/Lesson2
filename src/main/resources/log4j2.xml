@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+        <RollingFile name="FileAppender" fileName="log.log" filePattern="./log-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+        <JDBC name="db" tableName="logger">
+            <DriverManager connectionString="jdbc:postgresql://localhost:5432/postgres" driverClassName="org.postgresql.Driver"
+                           username="postgres" password="postgres"/>
+            <Column name="entry_date" isEventTimestamp="true" isUnicode="false"/>
+            <Column name="logger" pattern="%logger" isUnicode="false"/>
+            <Column name="log_level" pattern="%level" isUnicode="false"/>
+            <Column name="message" pattern="%m" isUnicode="false"/>
+            <Column name="exception" pattern="%throwable" isUnicode="false"/>
+        </JDBC>
+    </Appenders>
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="FileAppender" level="TRACE"/>
+            <AppenderRef ref="ConsoleAppender" level="DEBUG"/>
+        </Root>
+        <Logger name="system" level="debug" additivity="false">
+            <Appender-Ref ref="FileAppender"/>
+        </Logger>
+        <Logger name="security" level="info" additivity="false">
+            <Appender-Ref ref="ConsoleAppender"/>
+        </Logger>
+        <Logger name="events" level="info" additivity="false">
+            <Appender-Ref ref="db"/>
+        </Logger>
+    </Loggers>
+</Configuration>
